@@ -6,13 +6,26 @@ import java.util.regex.Pattern;
 public class whiteboard {
     public static String findConcat(String s, String[] strarr){
         List<Integer> result = new ArrayList<>();
+        Integer padding = 0, stringSize = strarr[0].length();
         for (int i=0; i< strarr.length-1;i++){
             String tempFoward = strarr[i] + strarr[i+1];
             String tempBack = strarr[i+1] + strarr[i];
-            if (s.contains(tempBack))
-                result.add(s.indexOf(tempBack));
-            if (s.contains(tempFoward))
-                result.add(s.indexOf(tempFoward));
+            while (s.contains(tempBack)) {
+                Integer temp = s.indexOf(tempBack);
+                result.add(temp + padding);
+                padding += temp + (stringSize * 2) + 1;
+                if (temp + (stringSize * 2) + 1 > s.length())
+                    break;
+                s = s.substring(temp + (stringSize * 2) + 1);
+            }
+            while (s.contains(tempFoward)) {
+                Integer temp = s.indexOf(tempFoward);
+                result.add(temp + padding);
+                padding += temp + (stringSize * 2) + 1;
+                if (temp + (stringSize * 2) + 1 > s.length())
+                    break;
+                s = s.substring(temp + (stringSize * 2) + 1);
+            }
         }
         return print(result);
     }
