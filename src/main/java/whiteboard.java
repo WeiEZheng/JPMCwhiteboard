@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +9,7 @@ public class whiteboard {
     public static String findConcat(String s, String[] strarr){
         List<Integer> result = new ArrayList<>();
         Integer padding = 0, stringSize = strarr[0].length();
+        Set<Integer> seen = new HashSet<>();
         for (int i=0; i < strarr.length-1;i++){
             for (int j = 0; j < strarr.length; j++) {
                 String tempFoward = strarr[i] + strarr[j];
@@ -34,18 +37,23 @@ public class whiteboard {
 
     public static String findConcatPattern(String s, String[] strarr){
         List<Integer> result = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
         for (int i=0; i< strarr.length-1;i++) {
             for (int j = 0; j < strarr.length; j++) {
                 String tempFoward = strarr[i] + strarr[j];
                 String tempBack = strarr[j] + strarr[i];
-                Pattern pattern = Pattern.compile(tempBack);
-                Pattern pattern1 = Pattern.compile(tempFoward);
-                Matcher matcher = pattern.matcher(s);
-                Matcher matcher1 = pattern1.matcher(s);
-                while (matcher.find())
-                    result.add(matcher.start());
-                while (matcher1.find())
-                    result.add(matcher1.start());
+                if (seen.add(tempBack)) {
+                    Pattern pattern = Pattern.compile(tempBack);
+                    Matcher matcher = pattern.matcher(s);
+                    while (matcher.find())
+                        result.add(matcher.start());
+                }
+                if (seen.add(tempFoward)) {
+                    Pattern pattern1 = Pattern.compile(tempFoward);
+                    Matcher matcher1 = pattern1.matcher(s);
+                    while (matcher1.find())
+                        result.add(matcher1.start());
+                }
             }
         }
         return print(result);
