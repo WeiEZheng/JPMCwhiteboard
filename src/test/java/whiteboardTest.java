@@ -30,4 +30,12 @@ class whiteboardTest {
         System.out.println(result);
         Assertions.assertTrue(result.contains("0") && result.contains("9") && result.contains("18"));
     }
+
+
+    @Test
+    void findConcatPat2() {
+        String result = whiteboard.findConcatPattern("barfoothefoobarmanfoobar", new String[]{"foo", "bar", "the"});
+        System.out.println(result);
+        Assertions.assertTrue(result.contains("0"));
+    }
 }
