@@ -9,8 +9,9 @@ public class whiteboard {
     public static String findConcat(String s, String[] strarr){
         List<Integer> result = new ArrayList<>();
         Integer padding = 0, stringSize = strarr[0].length();
-        Set<Integer> seen = new HashSet<>();
         for (int i=0; i < strarr.length-1;i++){
+            if (i==j)
+                continue;
             for (int j = 0; j < strarr.length; j++) {
                 String tempFoward = strarr[i] + strarr[j];
                 String tempBack = strarr[j] + strarr[i];
@@ -40,6 +41,8 @@ public class whiteboard {
         Set<String> seen = new HashSet<>();
         for (int i=0; i< strarr.length-1;i++) {
             for (int j = 0; j < strarr.length; j++) {
+                if (i==j)
+                    continue;
                 String tempFoward = strarr[i] + strarr[j];
                 String tempBack = strarr[j] + strarr[i];
                 if (seen.add(tempBack)) {
